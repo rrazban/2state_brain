@@ -11,6 +11,7 @@ function [total, hl, rho, pval]= plot_pseg(Edges, pseg, Sub_Ages, color, leg_lab
 
     total = 0;
     bin_size=zeros(1,N);
+%    new_ages=[];
     for i=1:N
 
     	q=find(Sub_Ages>=Edges(i)&Sub_Ages<Edges(i+1));          %calculates the medians and quartiles (error bars) of each age group 
@@ -23,15 +24,22 @@ function [total, hl, rho, pval]= plot_pseg(Edges, pseg, Sub_Ages, color, leg_lab
         Q25e(i)=-stderror;
         Q75e(i)=stderror;
 
+%	new_ages=[new_ages;Sub_Ages(q)];
+
 	%quartiles intead
 	%Q25e(i)=Qmed(i)-quantile(sss,.25);
 	%Q75e(i)=quantile(sss,.75)-Qmed(i);
      end
-     
-     [rho,pval]=corr(Sub_Ages,pseg','Type','Spearman');
-     str = strcat('\rho=', num2str(rho,'%.2f'),' (', num2str(pval,2), ') \newlineN=', string(total));	%some reason doesnt work if put direction after 'DisplayName'
+
+%     std(new_ages)
+
+     [rho,pval]=corr(Sub_Ages,pseg','Type','Spearman')	%techically includes all datapoints, even if doesnt fit in quartile. does not match exactly 'total' variable
+
+     % str = strcat('\rho=', num2str(rho,'%.2f'),' (', num2str(pval,2), ') \newlineN=', string(total));	%some reason doesnt work if put direction after 'DisplayName'
+     str = strcat(leg_lab,' (N=',string(total),')', ', \rho=', num2str(rho,'%.2f'),' (', num2str(pval,2), ')');	%some reason doesnt work if put direction after 'DisplayName'
 
      hl=errorbar(Edges(1:N)+2.5,Qmed,Q25e,Q75e,'DisplayName',str);
+%     hl=errorbar(Edges(1:N)+2.5,Qmed,Q25e,Q75e,'.', 'DisplayName',str);	%no line connecting the points
 
      hl.Marker='o';
      hl.MarkerEdgeColor= [.2 .2 .2];

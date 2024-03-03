@@ -28,9 +28,17 @@ parfor s=1:TOTAL_SUBS
 			raw_data = readmatrix(filename);
 		end	
 
+		%for UKB, remove first line and first column cuz they are just labels
+		if contains(data_dir, 'ukb')
+			raw_data(1, :) = [];
+			raw_data(:, 1) = [];
+		end
+
+
 		sz=size(raw_data);
 		T=sz(1);
 		num_regions=sz(2);	%also known as N
+
 
 		if T == correct_T 
 			sub_ages(s) = ages(s); 

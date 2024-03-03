@@ -20,6 +20,9 @@ m2s(inds)=NaN;
 xlabel_text = 'effective number of regions{\it N}_{eff}';
 ylabel_text = 'connection strength \lambda';
 
+
+%save(strcat(dataset,'_Neffs_',parcellation ,'.mat'),'subs','Neffs')
+
 plot_Neff(Neffs, lams, xlabel_text, ylabel_text, title_text, nnz(~isnan(Neffs)))
 
 end

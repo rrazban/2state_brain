@@ -6,10 +6,9 @@ function plot(x,y, xtext, ytext, title_text, num_subs)
 
 %	xlim([min(x)-2 max(x)+2])	
 	[rho,pval] = corr(x',y', 'Type', 'Spearman', 'rows', 'complete')
-%	legend(strcat('data (N=',string(num_subs) ,')'), 'Location', 'northwest')
+	legend(strcat('data (N=',string(num_subs) ,')'), 'Location', 'northwest')
 
 	hAxis=gca;
-%	title(title_text);
 	title(hAxis, title_text, ' ')	%make sure title has room for yaxis overflow 
 	hAxis.LineWidth=1;
 	hAxis.FontSize = 18;

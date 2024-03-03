@@ -1,8 +1,9 @@
 function [title_text, age_bins, data_dir, ages, subs, correct_T, Neff_opt, threshold, exact_norm_thresh]=camcan(parcellation)
 
 title_text ='Cambridge Centre for Ageing';
+
 %age_bins=20:5:85;	%youngest age is 18 but very few ppl in 18-20 bin
-age_bins=17.5:5:87.5;	
+age_bins=17.5:5:87.5;%there is only one person who is 88 who gets excluded by this binning	
 %age_bins=18:1:87;
 
 data_dir = strcat('/shared/datasets/public/camcan/derivatives/parcelled/', parcellation);	%gm_voxel, 300
@@ -15,7 +16,7 @@ info = tdfread(info_file);
 ages = info.age;
 subs = cellstr(info.Observations);
 
-correct_T =241;%its wmcsf but with first 20 timepoints removed to remove coil warmup fluctuations
+correct_T =241;	%its wmcsf but with first 20 timepoints removed to remove coil warmup fluctuations
 
 if contains(data_dir, 'nosmooth')	%gm_voxel with no 5mm FWHM smoothing
 	Neff_opt = 280; 

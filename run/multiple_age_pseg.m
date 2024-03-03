@@ -3,11 +3,11 @@ function multiple_age_pseg(which)
 
 %which: 'lambda', 'pseg'
 
-parcellation = '300';
+parcellation = '300';	%can also be 'gm_voxel' but data not available for UKB
 
 datasets = {'camcan', 'ukb', 'hcp'};
 pretty_datasets = {'CamCAN', 'UKB','HCP'};
-colors={'c', 'm', 'g'};
+colors={'#4DBEEE', '#7E2F8E', '#77AC30'};
 
 for num = 1:length(datasets)
 	dataset = datasets{num};
@@ -28,16 +28,23 @@ for num = 1:length(datasets)
 		ys=Lams;
 		y_text = '\Lambda';
 		ylim([-0.5 0.1])
-	else
+		loc = 'northeast';
+	elseif contains(lower(which), 'pseg')
 		ys=psegs;
 		y_text = '{\it P}_{seg}';
 		ylim([0.6 1])
+		loc = 'northeast';
+	elseif contains(lower(which), 'pint')
+		ys=1-psegs;
+		y_text = '{\it P}_{int}';
+		ylim([0 0.4])
+		loc = 'southeast';
+
 	end
 
 	inds = ~isnan(ys);
 	ys=ys(inds);
 	ages=ages(inds);
-
 	[n_exp, data, rho, pval] = plot_pseg(Edges,ys,ages, colors{num}, pretty_datasets{num});
 	hold on
 end
@@ -45,7 +52,7 @@ end
 ylabel(y_text);
 xlabel('age in years')
 xlim([19 91])
-legend('location', 'best', 'FontSize', 14);
+legend('location', loc, 'FontSize', 14);
 
 end
 
