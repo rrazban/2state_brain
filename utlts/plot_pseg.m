@@ -38,7 +38,9 @@ function [total, hl, rho, pval]= plot_pseg(Edges, pseg, Sub_Ages, color, leg_lab
      % str = strcat('\rho=', num2str(rho,'%.2f'),' (', num2str(pval,2), ') \newlineN=', string(total));	%some reason doesnt work if put direction after 'DisplayName'
      str = strcat(leg_lab,' (N=',string(total),')', ', \rho=', num2str(rho,'%.2f'),' (', num2str(pval,2), ')');	%some reason doesnt work if put direction after 'DisplayName'
 
-     hl=errorbar(Edges(1:N)+2.5,Qmed,Q25e,Q75e,'DisplayName',str);
+     offset = (Edges(2)-Edges(1))/2;
+     hl=errorbar(Edges(1:N)+offset,Qmed,Q25e,Q75e,'DisplayName',str);
+%     hl=errorbar(Edges(1:N)+2.5,Qmed,Q25e,Q75e,'DisplayName',str);
 %     hl=errorbar(Edges(1:N)+2.5,Qmed,Q25e,Q75e,'.', 'DisplayName',str);	%no line connecting the points
 
      hl.Marker='o';
